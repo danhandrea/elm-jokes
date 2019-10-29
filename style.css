@@ -1,0 +1,67 @@
+html,
+body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  display: grid;
+  grid-template-areas: "header" "main" "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: 3rem 1fr 3rem;
+}
+
+header {
+  background-color: #dcdcdc;
+  grid-area: header;
+}
+
+main {
+  background-color: ghostwhite;
+  grid-area: main;
+}
+
+section {
+  display: grid;
+  height: 100%;
+  grid-template-areas: "category" "jokebody";
+  grid-template-rows: 1em 1fr;
+}
+
+.category {
+  grid-area: category;
+  text-align: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+article {
+  display: grid;
+  align-content: center;
+  text-align: center;
+  color: gray;
+}
+
+article.single {
+  grid-area: jokebody;
+  font-size: 5em;
+}
+
+article.twopart {
+  grid-area: jokebody;
+  font-size: 5em;
+}
+
+article span {
+  color: lightgray;
+}
+
+article span::after {
+  content: ":";
+}
+
+footer {
+  background-color: #dcdcdc;
+  grid-area: footer;
+}

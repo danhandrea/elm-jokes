@@ -103,7 +103,13 @@ view { title, mJoke, category } =
                 Nothing ->
                     H.text ""
             ]
-        , H.footer [] [ H.text "Press [Space] for new joke" ]
+        , H.footer []
+            [ H.text "Press [Space] for new joke"
+            , H.span []
+                [ H.text "Jokes provided by "
+                , H.a [ A.target "_blank", A.href "https://sv443.net/jokeapi" ] [ H.text "Sv443 " ]
+                ]
+            ]
         ]
     }
 

@@ -6480,11 +6480,9 @@ var $author$project$Main$update = F2(
 					$elm$core$Platform$Cmd$none);
 		}
 	});
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$footer = _VirtualDom_node('footer');
 var $elm$html$Html$header = _VirtualDom_node('header');
-var $elm$html$Html$main_ = _VirtualDom_node('main');
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6493,6 +6491,17 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			key,
 			$elm$json$Json$Encode$string(string));
 	});
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $elm$html$Html$main_ = _VirtualDom_node('main');
+var $elm$html$Html$span = _VirtualDom_node('span');
+var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$section = _VirtualDom_node('section');
@@ -6676,7 +6685,25 @@ var $author$project$Main$view = function (_v0) {
 				_List_Nil,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Press [Space] for new joke')
+						$elm$html$Html$text('Press [Space] for new joke'),
+						A2(
+						$elm$html$Html$span,
+						_List_Nil,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Jokes provided by '),
+								A2(
+								$elm$html$Html$a,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$target('_blank'),
+										$elm$html$Html$Attributes$href('https://sv443.net/jokeapi')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text('Sv443 ')
+									]))
+							]))
 					]))
 			]),
 		N: title

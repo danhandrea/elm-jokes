@@ -15,6 +15,9 @@ body {
 header {
   background-color: #dcdcdc;
   grid-area: header;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 main {
@@ -64,4 +67,7 @@ article span::after {
 footer {
   background-color: #dcdcdc;
   grid-area: footer;
+  text-align: center;
+  display: grid;
+  align-content: center;
 }

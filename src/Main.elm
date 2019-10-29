@@ -17,6 +17,7 @@ import Json.Decode as JD exposing (Decoder)
 type alias Model =
     { title : String
     , mJoke : Maybe Joke
+    , category : Category
     }
 
 
@@ -26,7 +27,7 @@ type alias Model =
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( Model "Elm Jokes" Nothing
+    ( Model "Elm Jokes" Nothing Any
       -- , Cmd.none
     , Cmd.batch [ get Any ]
     )
@@ -39,6 +40,7 @@ init _ =
 type Msg
     = Got (Result Http.Error Joke)
     | KeyPress String
+    | Set Category
 
 
 
@@ -46,7 +48,7 @@ type Msg
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update msg ({ category } as model) =
     case msg of
         Got (Ok joke) ->
             ( { model | mJoke = Just joke }, Cmd.none )
@@ -57,11 +59,14 @@ update msg model =
         KeyPress key ->
             ( model
             , if key == " " then
-                get Any
+                get category
 
               else
                 Cmd.none
             )
+
+        Set newCategory ->
+            ( { model | category = newCategory }, Cmd.none )
 
 
 
@@ -80,11 +85,16 @@ get category =
 -- VIEW
 
 
-view : Model -> Document msg
-view { title, mJoke } =
+view : Model -> Document Msg
+view { title, mJoke, category } =
     { title = title
     , body =
-        [ H.header [] []
+        [ H.header []
+            [ viewRadioFor category Any
+            , viewRadioFor category Dark
+            , viewRadioFor category Programming
+            , viewRadioFor category Miscellaneous
+            ]
         , H.main_ []
             [ case mJoke of
                 Just joke ->
@@ -93,9 +103,31 @@ view { title, mJoke } =
                 Nothing ->
                     H.text ""
             ]
-        , H.footer [] []
+        , H.footer [] [ H.text "Press [Space] for new joke" ]
         ]
     }
+
+
+viewRadioFor : Category -> Category -> Html Msg
+viewRadioFor current cat =
+    let
+        id =
+            Joke.categoryToString cat
+
+        selected =
+            current == cat
+    in
+    H.div []
+        [ H.input
+            [ A.type_ "radio"
+            , A.name "category"
+            , A.id id
+            , A.checked selected
+            , E.onCheck (\_ -> Set cat)
+            ]
+            []
+        , H.label [ A.for id ] [ H.text <| id ]
+        ]
 
 
 viewJoke : Joke -> Html msg
@@ -114,8 +146,8 @@ viewJokeBody body =
 
         TwoParts setup delivery ->
             H.article [ A.class "twopart " ]
-                [ H.div [] [ H.span [] [ H.text "Q" ], H.text setup ]
-                , H.div [] [ H.span [] [ H.text "A" ], H.text delivery ]
+                [ H.div [] [ H.text setup ]
+                , H.div [] [ H.text delivery ]
                 ]
 
 
